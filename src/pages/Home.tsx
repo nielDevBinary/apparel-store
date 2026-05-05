@@ -3,8 +3,9 @@ import { Hero } from "../components/Hero";
 import { Link } from "react-router-dom";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { axiosProducts, type Product } from "../api/StoreApi";
+import { axiosProducts } from "../api/StoreApi";
 import { ProductCard } from "../components/ProductCard";
+import type { Product } from "../type";
 
 export const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);

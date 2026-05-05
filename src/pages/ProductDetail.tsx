@@ -84,7 +84,6 @@ export const ProductDetail = () => {
     );
   }
 
-  const sizes = product.variants;
 
   return (
     <motion.div
