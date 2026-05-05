@@ -1,73 +1,112 @@
-# React + TypeScript + Vite
+# 📦 Shopping Cart App (React + TypeScript)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación de carrito de compras desarrollada con **React + TypeScript**, utilizando **Context API** para la gestión global del estado.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Características
 
-## React Compiler
+- 🛒 Agregar productos al carrito
+- ➕ Incrementar cantidad por variante
+- ➖ Disminuir cantidad o eliminar producto
+- ❌ Remover productos del carrito
+- 📦 Control de stock por variante
+- 💰 Cálculo automático del total
+- 🔢 Conteo total de productos en el carrito
+- 🧠 Manejo global del estado con Context API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧠 Lógica principal
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+El estado del carrito se maneja mediante un `ShoppingCartContext`, que centraliza toda la lógica.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Estado global
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- `cartItems`: lista de productos en el carrito  
+- `isOpen`: controla si el carrito está visible  
+- `cartQuantity`: total de productos  
+- `totalAmount`: monto total  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🛠 Funciones principales
+
+### `addToCart(item)`
+Agrega un producto al carrito:
+- Si ya existe, incrementa la cantidad
+- Respeta el **stock disponible**
+
+### `increaseItemQuantity(variantId)`
+Incrementa la cantidad de un producto:
+- Verifica que no supere el stock
+
+### `decreaseCartQuantity(variantId)`
+Disminuye la cantidad:
+- Si llega a 0, elimina el producto
+
+### `removeFromCart(variantId)`
+Elimina completamente el producto del carrito
+
+### `getItemQuantity(variantId)`
+Obtiene la cantidad actual de un producto
+
+---
+
+## 🧩 Estructura del CartItem
+
+```ts
+type CartItem = {
+  productId: string;
+  variantId: string;
+  quantity: number;
+
+  name: string;
+  price: number;
+  image: string;
+  size: string;
+  stock: number;
+};
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Instalación
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/tu-usuario/tu-repo.git
+cd tu-repo
+npm install
+npm run dev
 ```
+
+---
+
+## 🧪 Ejemplo de uso
+
+```tsx
+const { addToCart } = useShoppingCart();
+
+addToCart({
+  productId: "1"
+  variantId: "S-1",
+  name:"vestido",
+  price: 100,
+  image:"image.jpg"
+  size:"S"
+  quantity: 2,
+  stock: 5,
+});
+```
+
+---
+
+## 🧱 Tecnologías
+
+- React  
+- Tailwind css 
+- TypeScript  
+- Context API  
+- Vite / Next.js  
+
+---
